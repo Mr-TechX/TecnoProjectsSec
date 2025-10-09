@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TPA | 404</title>
+  <meta name="keywords" content="Tec, Tech, TecnoProjects, projects, proyectos, portafolio, digital, technology, tecnologia, dev, developer, programmer, software, development, programador, programadores, programas, desarrollo, web, mobile, movil, desktop, escritorio, windows, linux, mac, ios, android, news, noticias, academy, school, escuela">
+    <meta name="description" content="TecnoProjects Security Oficial">  
+    <meta name="author" content="TecnoProjects Security">
+    <meta name="robots" content="index, follow">
+    <meta name="google-site-verification" content="your-google-site-verification-code">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600,700" rel="stylesheet">
+    <link rel="icon" type="image/ico" href="../../img/ico.png">
+    <link rel="stylesheet" type="text/css" href="404.css">
+</head>
+<body>
+  <canvas id="bgCanvas" aria-hidden="true"></canvas>
+
+  <div class="wrap">
+    <div class="card" role="region" aria-labelledby="errTitle">
+      <div class="left">
+        <h1 id="errTitle" class="code" data-text="ERROR 404">ERROR 404</h1>
+        <p class="subtitle">Esta pagina esta pasando por un proceso designado como: <strong>Pagina en desarrollo</strong>.</p>
+
+        <div class="controls">
+          <button class="btn" id="homeBtn" title="Ir al inicio">Volver al inicio</button>
+          <button class="ghost" id="retryBtn" title="Reintentar conexión">Reintentar conexión</button>
+          <button class="ghost" id="glitchToggle" title="Activar / Desactivar glitch">Glitch: ON</button>
+        </div>
+
+        <div class="small">Consejo: mueve el cursor para activar el modo parallax.</div>
+      </div>
+
+      <aside class="panel" aria-label="Panel de diagnóstico">
+        <div>
+          <div class="status">PUERTO: <span id="port">/dev/void</span></div>
+          <div class="meta">ESTADO: <span id="sysState">Desconocido</span></div>
+        </div>
+        <div class="terminal" id="terminal" role="log" aria-live="polite">
+          <div class="term-line muted">> inicio de diagnóstico...</div>
+          <div class="term-line">escaneando rutas — 0x3f</div>
+          <div class="term-line">analizando señal…</div>
+        </div>
+
+        <!-- <div class="warp">
+          <input id="warpInput" placeholder="Escribe una URL o palabra clave (ej: /index.html)" aria-label="URL a teletransportar" />
+          <button class="btn" id="warpBtn" title="Teletransportar">Warp</button>
+        </div> -->
+
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="meta">Tiempo: <span id="clock">--:--:--</span></div>
+          <div class="meta">Memoria virtual: <span id="mem">--%</span></div>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+
+  <svg class="cursor-ship" id="cursorShip" viewBox="0 0 64 64" aria-hidden="true">
+    <g>
+      <path d="M32 2 L42 40 L32 34 L22 40 Z" fill="url(#g1)" />
+      <defs>
+        <linearGradient id="g1" x1="0" x2="1">
+          <stop offset="0" stop-color="#53f0ff" stop-opacity="1" />
+          <stop offset="1" stop-color="#9b59ff" stop-opacity="1" />
+        </linearGradient>
+      </defs>
+    </g>
+  </svg>
+
+  <script src="404.js"></script>
+</body>
+</html>
