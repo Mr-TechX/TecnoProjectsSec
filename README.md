@@ -1,4 +1,4 @@
 # NUESTRA WEB
-[ENTRAR](https://tecnoprojects.github.io)
+[ENTRAR](https://tecnoprojects-security.vercel.app/)
 ---
-[![WEB](https://raw.githubusercontent.com/tecnoprojects/tecnoprojects.github.io/main/images/cap.png)](https://tecnoprojects.github.io)
+[![WEB](https://raw.githubusercontent.com/Mr-TechX/TecnoProjectsSec/refs/heads/main/img/cap.png)](https://tecnoprojects.github.io)
