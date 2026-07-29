@@ -1,519 +1,1460 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="AEGIS — Consultoría en ciberseguridad" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; upgrade-insecure-requests"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="color-scheme" content="dark" />
+    <title>AEGIS | Consultoría en Ciberseguridad</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Tema nocturno: la jerarquía de la referencia, reinterpretada en blanco neón. */
+      :root {
+        --bg: #050506;
+        --surface: #0d0d10;
+        --line: #ffffff2b;
+        --text: #fbfbfc;
+        --muted: #afafb8;
+        --glow: 0 0 22px #fff8;
+      }
+      body {
+        background: #050506;
+      }
+      .site-header {
+        background: #050506d9;
+        border-bottom-color: #ffffff24;
+        backdrop-filter: blur(18px);
+      }
+      .brand {
+        color: #fff;
+        text-shadow: 0 0 18px #fff6;
+      }
+      .brand span {
+        color: #fff;
+      }
+      nav a:hover,
+      aside a:hover,
+      .industry-note a {
+        color: #fff;
+        text-shadow: 0 0 12px #fff8;
+      }
+      .hero {
+        background:
+          radial-gradient(circle at 78% 34%, #ffffff1a, transparent 24%),
+          radial-gradient(circle at 13% 100%, #ffffff10, transparent 26%);
+      }
+      .grid-bg {
+        background-image:
+          linear-gradient(#ffffff10 1px, transparent 1px),
+          linear-gradient(90deg, #ffffff10 1px, transparent 1px);
+      }
+      .orb {
+        opacity: 0.18;
+      }
+      .orb-two {
+        background: #d3d3d8;
+      }
+      .hero h1 {
+        text-shadow: 0 3px 28px #000;
+      }
+      .lead {
+        color: #d2d2d8;
+      }
+      .button {
+        border-radius: 5px;
+        border-color: #ffffff66;
+        background: #ffffff0c;
+        transition: 0.25s;
+      }
+      .button:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--glow);
+      }
+      .button-solid:hover {
+        box-shadow: 0 0 30px #fff;
+      }
+      .stats {
+        border-top-color: #ffffff3d;
+      }
+      .stats strong {
+        text-shadow: 0 0 15px #fff5;
+      }
+      .stats span {
+        color: #babac2;
+      }
+      .aegis-mark {
+        border-radius: 8px;
+        background:
+          radial-gradient(circle at 50% 40%, #ffffff22, transparent 36%),
+          linear-gradient(135deg, #19191d, #070708);
+        box-shadow:
+          inset 0 0 80px #ffffff0b,
+          0 0 40px #ffffff18;
+      }
+      .trust {
+        background: #101013;
+        color: #fff;
+        border-block: 1px solid #ffffff2d;
+        box-shadow: inset 0 0 50px #ffffff0d;
+      }
+      .trust p {
+        color: #d5d5dc;
+      }
+      .services-section {
+        background: #09090b;
+      }
+      .governance {
+        background: #050506;
+      }
+      .service-card {
+        border-color: #ffffff24;
+        border-radius: 5px;
+        background: linear-gradient(135deg, #151518, #09090b);
+      }
+      .service-card:hover {
+        border-color: #fff;
+        box-shadow:
+          0 12px 36px #000,
+          0 0 24px #fff3;
+      }
+      .industry-grid article {
+        background: #101013;
+        border-left-color: #fff;
+      }
+      .package-section {
+        background:
+          radial-gradient(circle at 72% 12%, #ffffff1c, transparent 25%),
+          linear-gradient(150deg, #151519, #050506);
+      }
+      .packages article {
+        border-color: #ffffff35;
+        border-radius: 5px;
+        background: #0d0d10;
+      }
+      .packages .featured {
+        box-shadow: 0 0 27px #fff3;
+      }
+      .packages a {
+        border-radius: 3px;
+        transition: 0.2s;
+      }
+      .packages a:hover {
+        background: #fff;
+        color: #09090a;
+        box-shadow: var(--glow);
+      }
+      .steps article {
+        background: #0c0c0f;
+      }
+      .steps b {
+        color: #fff;
+        text-shadow: 0 0 18px #fff5;
+      }
+      .case-section {
+        background: #0d0d10;
+      }
+      .case-card {
+        background: #09090b;
+        border-color: #ffffff2e;
+      }
+      .contact {
+        background: #0a0a0c;
+        color: #f7f7f8;
+        border-top: 1px solid var(--line);
+      }
+      .contact .eyebrow,
+      .contact .section-intro {
+        color: #bcbcc4;
+      }
+      .contact aside {
+        border-left-color: #fff;
+      }
+      .contact aside p {
+        color: #b7b7bf;
+      }
+      .contact aside a {
+        color: #fff;
+      }
+      input,
+      select,
+      textarea {
+        border-color: #ffffff38;
+        background: #141417;
+        color: #fff;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: 1px solid #fff;
+        box-shadow: 0 0 16px #fff4;
+      }
+      /* Tarjetas de servicios: versión oscura del patrón editorial de la referencia. */
+      .service-grid {
+        gap: 18px;
+      }
+      .service-card {
+        min-height: 300px;
+        padding: 0;
+        overflow: hidden;
+        border: 1px solid #ffffff2b;
+        background: #0e0e11;
+        box-shadow: none;
+      }
+      .service-card::before {
+        content: "";
+        display: block;
+        height: 3px;
+        background: #fff;
+        box-shadow: 0 0 13px #fff;
+      }
+      .service-card .number {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 17px 20px 0;
+        color: #e9e9ef;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+      }
+      .service-card .number::before {
+        content: "◈";
+        display: grid;
+        place-items: center;
+        width: 23px;
+        height: 23px;
+        border: 1px solid #fff;
+        border-radius: 4px;
+        color: #fff;
+        box-shadow: 0 0 12px #fff4;
+      }
+      .service-card h3 {
+        margin: 14px 20px 8px;
+        font-size: 18px;
+      }
+      .service-card p {
+        margin: 0 20px 14px;
+      }
+      .service-card .tags {
+        margin: 0 20px 15px;
+      }
+      .service-card details {
+        margin: 0 20px;
+        padding-top: 11px;
+      }
+      .service-card a {
+        left: 20px;
+        bottom: 18px;
+      }
+      .service-card:hover {
+        transform: translateY(-4px);
+        background: #151519;
+      }
+      .service-card:first-child {
+        grid-column: span 3;
+        min-height: 325px;
+        background: linear-gradient(110deg, #151519, #0a0a0c);
+      }
+      .service-card:first-child::before {
+        height: 5px;
+      }
+      .service-card:first-child h3 {
+        font-size: 24px;
+      }
+      .service-card:first-child .number {
+        margin-top: 23px;
+      }
+      .service-card:first-child p {
+        max-width: 630px;
+      }
+      .service-card:first-child details {
+        max-width: 630px;
+      }
+      .industry-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+      }
+      .industry-grid article {
+        display: grid;
+        grid-template-columns: 112px 1fr;
+        padding: 0;
+        min-height: 170px;
+        border: 1px solid #ffffff2b;
+        border-left: 1px solid #ffffff2b;
+        background: #0d0d10;
+        overflow: hidden;
+        transition: 0.25s;
+      }
+      .industry-grid article header {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 18px;
+        background: linear-gradient(145deg, #1c1c20, #0a0a0c);
+        border-right: 1px solid #ffffff24;
+      }
+      .industry-grid article header i {
+        color: #fff;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+      }
+      .industry-grid article header span {
+        font-size: 29px;
+        line-height: 1;
+        color: #fff;
+        text-shadow: 0 0 14px #fff8;
+      }
+      .industry-grid article > div {
+        padding: 19px 20px;
+      }
+      .industry-grid h3 {
+        margin: 0 0 7px;
+        font-size: 18px;
+      }
+      .industry-grid p {
+        min-height: 0;
+        margin: 0 0 16px;
+        font-size: 13px;
+      }
+      .industry-grid em {
+        display: inline-block;
+        padding: 3px 7px;
+        border: 1px solid #ffffff33;
+        border-radius: 99px;
+        font-size: 10px;
+      }
+      .industry-grid article:hover {
+        transform: translateY(-4px);
+        border-color: #fff;
+        box-shadow:
+          0 10px 25px #000,
+          0 0 19px #fff2;
+      }
+      @media (max-width: 850px) {
+        .service-card:first-child {
+          grid-column: span 2;
+        }
+        .industry-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 590px) {
+        .service-card:first-child {
+          grid-column: span 1;
+        }
+        .industry-grid article {
+          grid-template-columns: 86px 1fr;
+        }
+        .industry-grid article > div {
+          padding: 17px;
+        }
+        .service-card:first-child h3 {
+          font-size: 20px;
+        }
+      }
+      /* Tarjeta principal inspirada en example.png, llevada a oscuro blanco neón. */
+      .service-card--pentest {
+        grid-column: 1/-1 !important;
+        min-height: 0 !important;
+        padding: 38px !important;
+        border: 2px solid #fff !important;
+        border-radius: 18px !important;
+        background:
+          radial-gradient(circle at 93% 3%, #ffffff12, transparent 20%), #09090c !important;
+        box-shadow: 0 0 32px #fff1 !important;
+      }
+      .service-card--pentest::before {
+        display: none;
+      }
+      .pentest-heading {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        gap: 18px;
+        align-items: start;
+      }
+      .pentest-icon {
+        display: grid;
+        place-items: center;
+        width: 66px;
+        height: 66px;
+        border: 1px solid #fff;
+        border-radius: 14px;
+        font-size: 31px;
+        color: #fff;
+        box-shadow:
+          inset 0 0 18px #fff2,
+          0 0 18px #fff3;
+      }
+      .pentest-heading .number {
+        display: block;
+        margin: 0 0 4px;
+        color: #bdbdc7;
+      }
+      .pentest-heading h3 {
+        margin: 0 !important;
+        font-size: 39px !important;
+        line-height: 1.05;
+      }
+      .pentest-heading p {
+        max-width: 760px;
+        margin: 10px 0 0 !important;
+        font-size: 17px;
+      }
+      .pentest-mode {
+        padding: 8px 13px;
+        border: 1px solid #ffffff3d;
+        border-radius: 999px;
+        color: #fff;
+        background: #ffffff0c;
+        font-size: 13px;
+        white-space: nowrap;
+      }
+      .test-modes {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin: 38px 0;
+      }
+      .test-modes article {
+        min-height: 180px;
+        padding: 23px;
+        border: 1px solid #ffffff2e;
+        border-radius: 12px;
+        background: #121218;
+        overflow: hidden;
+        position: relative;
+      }
+      .test-modes article::after {
+        content: "";
+        position: absolute;
+        width: 118px;
+        height: 118px;
+        border: 1px solid #ffffff1c;
+        border-radius: 50%;
+        right: -48px;
+        top: -48px;
+      }
+      .test-modes article:nth-child(2) {
+        background: #1a1a20;
+      }
+      .test-modes article:nth-child(3) {
+        background: #24242b;
+      }
+      .test-modes span {
+        display: grid;
+        place-items: center;
+        width: 45px;
+        height: 45px;
+        border-radius: 9px;
+        border: 1px solid #ffffff5a;
+        background: #fff1;
+        color: #fff;
+        font-size: 20px;
+      }
+      .test-modes h4 {
+        margin: 22px 0 7px;
+        font-size: 22px;
+      }
+      .test-modes p {
+        margin: 0;
+        color: #c3c3cc;
+        font-size: 14px;
+      }
+      .pentest-bottom {
+        display: grid;
+        grid-template-columns: 1.5fr 0.9fr;
+        gap: 30px;
+      }
+      .pentest-bottom h4 {
+        margin: 0 0 17px;
+        font-size: 17px;
+        color: #fff;
+      }
+      .methodologies {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .methodologies li {
+        padding: 13px 14px;
+        border: 1px solid #ffffff14;
+        border-radius: 7px;
+        background: #ffffff08;
+        color: #d8d8df;
+        font-size: 14px;
+      }
+      .methodologies li::before {
+        content: "•";
+        margin-right: 11px;
+        color: #fff;
+        text-shadow: 0 0 8px #fff;
+      }
+      .deliverables {
+        padding: 20px 22px;
+        border: 1px solid #ffffff30;
+        border-radius: 12px;
+        background: #ffffff08;
+      }
+      .deliverables ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+      .deliverables li {
+        margin: 11px 0;
+        color: #d8d8df;
+        font-size: 14px;
+      }
+      .deliverables li::before {
+        content: "□";
+        margin-right: 11px;
+        color: #fff;
+      }
+      .deliverables a {
+        display: flex !important;
+        position: static !important;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 22px;
+        padding: 13px;
+        border: 1px solid #fff;
+        border-radius: 6px;
+        background: #fff;
+        color: #09090a !important;
+        font-weight: 800;
+        text-decoration: none;
+        transition: 0.2s;
+      }
+      .deliverables a:hover {
+        box-shadow: 0 0 24px #fff;
+        transform: translateY(-1px);
+      }
+      @media (max-width: 850px) {
+        .service-card--pentest {
+          padding: 27px !important;
+        }
+        .pentest-bottom {
+          grid-template-columns: 1fr;
+        }
+        .pentest-heading h3 {
+          font-size: 32px !important;
+        }
+      }
+      @media (max-width: 590px) {
+        .service-card--pentest {
+          padding: 20px !important;
+          border-radius: 11px !important;
+        }
+        .pentest-heading {
+          grid-template-columns: auto 1fr;
+        }
+        .pentest-mode {
+          grid-column: 1/-1;
+          justify-self: start;
+        }
+        .pentest-icon {
+          width: 49px;
+          height: 49px;
+          font-size: 23px;
+        }
+        .pentest-heading h3 {
+          font-size: 26px !important;
+        }
+        .pentest-heading p {
+          font-size: 14px;
+        }
+        .test-modes,
+        .methodologies {
+          grid-template-columns: 1fr;
+        }
+        .test-modes {
+          margin: 25px 0;
+          gap: 10px;
+        }
+        .test-modes article {
+          min-height: 135px;
+        }
+        .test-modes h4 {
+          margin-top: 14px;
+        }
+        .methodologies li {
+          font-size: 13px;
+        }
+      }
+      /* Misma arquitectura visual de example.png: cabeceras horizontales y superficies delimitadas. */
+      .service-card--pentest {
+        max-width: 100%;
+        padding: 42px !important;
+        background: #0b0b0e !important;
+      }
+      .pentest-heading {
+        padding-bottom: 8px;
+      }
+      .pentest-heading h3 {
+        letter-spacing: -0.035em;
+      }
+      .test-modes {
+        margin: 34px 0 40px;
+      }
+      .test-modes article {
+        border-radius: 10px;
+      }
+      .pentest-bottom {
+        grid-template-columns: minmax(0, 1.65fr) minmax(340px, 0.9fr);
+        align-items: start;
+      }
+      .methodologies li {
+        min-height: 56px;
+        display: flex;
+        align-items: center;
+      }
+      .deliverables {
+        min-height: 297px;
+        display: flex;
+        flex-direction: column;
+      }
+      .deliverables a {
+        margin-top: auto;
+      }
+      .industry-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .industry-grid article {
+        display: block;
+        min-height: 0;
+        border: 1px solid #ffffff34;
+        border-radius: 7px;
+        background: #0c0c0f;
+      }
+      .industry-grid article header {
+        height: 48px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 18px;
+        background: linear-gradient(90deg, #15151a, #24242a);
+        border-right: 0;
+        border-bottom: 1px solid #ffffff29;
+      }
+      .industry-grid article header i {
+        font-size: 11px;
+        color: #fff;
+      }
+      .industry-grid article header span {
+        font-size: 19px;
+        text-shadow: 0 0 14px #fff8;
+      }
+      .industry-grid article > div {
+        padding: 20px 21px 18px;
+      }
+      .industry-grid h3 {
+        font-size: 17px;
+        margin: 0 0 7px;
+      }
+      .industry-grid p {
+        margin: 0 0 14px;
+        min-height: 40px;
+      }
+      .industry-grid em {
+        padding: 4px 8px;
+        background: #ffffff08;
+      }
+      .industry-grid article:hover {
+        background: #121217;
+      }
+      @media (max-width: 850px) {
+        .pentest-bottom {
+          grid-template-columns: 1fr;
+        }
+        .industry-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 590px) {
+        .service-card--pentest {
+          padding: 22px !important;
+        }
+        .industry-grid article header {
+          height: 43px;
+        }
+        .industry-grid article > div {
+          padding: 16px;
+        }
+        .deliverables {
+          min-height: 0;
+        }
+        .methodologies li {
+          min-height: 0;
+        }
+      }
+      /* El CTA participa en el flujo: los detalles abiertos ya no lo cubren. */
+      .service-card:not(.service-card--pentest) {
+        display: flex;
+        flex-direction: column;
+      }
+      .service-card:not(.service-card--pentest) a {
+        position: static;
+        display: inline-flex;
+        align-self: flex-start;
+        margin: 18px 20px 20px;
+      }
+      .service-card:not(.service-card--pentest) details {
+        margin-bottom: 0;
+      }
+      .service-card:not(.service-card--pentest) details[open] {
+        padding-bottom: 4px;
+      }
+      /* Adaptación responsive: estas reglas no afectan el lienzo de escritorio. */
+      @media (max-width: 1024px) {
+        .container {
+          width: min(100% - 48px, 1120px);
+        }
+        .section {
+          padding: 88px 0;
+        }
+        .hero h1 {
+          max-width: 720px;
+        }
+        .about {
+          gap: 48px;
+        }
+        .service-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .service-card--pentest {
+          grid-column: 1/-1 !important;
+        }
+        .industry-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .contact-layout {
+          gap: 30px;
+        }
+        .packages {
+          gap: 12px;
+        }
+        .packages article {
+          padding: 22px;
+        }
+        .case-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 700px) {
+        .container {
+          width: calc(100% - 32px);
+        }
+        .site-header {
+          height: 64px;
+          padding: 0 16px;
+        }
+        .menu-button {
+          display: block;
+        }
+        nav {
+          display: none;
+          position: absolute;
+          top: 64px;
+          left: 0;
+          right: 0;
+          padding: 16px;
+          background: #09090bdd;
+          border-bottom: 1px solid var(--line);
+          backdrop-filter: blur(16px);
+          flex-direction: column;
+          gap: 4px;
+        }
+        nav.open {
+          display: flex;
+        }
+        nav a {
+          padding: 10px 0;
+        }
+        .hero {
+          min-height: 0;
+          padding: 64px 0 0;
+        }
+        .hero-content {
+          padding-top: 78px;
+          padding-bottom: 48px;
+        }
+        .hero h1 {
+          font-size: clamp(42px, 12vw, 63px);
+        }
+        .lead {
+          font-size: 16px;
+          margin: 20px 0 27px;
+        }
+        .stats {
+          margin-top: 52px;
+          gap: 14px;
+        }
+        .section {
+          padding: 70px 0;
+        }
+        .section-intro {
+          font-size: 16px;
+          margin-bottom: 30px;
+        }
+        .about {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+        .aegis-mark {
+          min-height: 240px;
+        }
+        .service-grid,
+        .industry-grid,
+        .packages,
+        .steps,
+        .case-grid {
+          grid-template-columns: 1fr;
+        }
+        .service-card--pentest {
+          grid-column: 1/-1 !important;
+        }
+        .industry-grid article {
+          min-height: 0;
+        }
+        .contact-layout {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+        .contact aside {
+          border-left: 0;
+          border-top: 2px solid #fff;
+          padding: 24px 0;
+        }
+        .case-card {
+          min-height: 0;
+        }
+        .packages article {
+          min-height: 0;
+        }
+        .steps article {
+          padding: 24px;
+        }
+        .trust {
+          padding: 27px 16px;
+        }
+        .logos {
+          gap: 16px 26px;
+          font-size: 15px;
+        }
+      }
+      @media (max-width: 460px) {
+        .brand {
+          font-size: 22px;
+        }
+        .hero-content {
+          padding-top: 66px;
+        }
+        .hero h1 {
+          font-size: 41px;
+          letter-spacing: -0.055em;
+        }
+        .eyebrow {
+          font-size: 10px;
+        }
+        .actions {
+          display: grid;
+          grid-template-columns: 1fr;
+        }
+        .button {
+          justify-content: space-between;
+          width: 100%;
+        }
+        .stats {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 8px;
+          margin-top: 38px;
+          padding-top: 18px;
+        }
+        .stats strong {
+          font-size: 21px;
+        }
+        .stats span {
+          font-size: 10px;
+          line-height: 1.35;
+        }
+        .section h2 {
+          font-size: 34px;
+        }
+        .service-card:not(.service-card--pentest) {
+          min-height: 0;
+          padding-bottom: 2px;
+        }
+        .service-card h3 {
+          font-size: 18px;
+        }
+        .service-card p {
+          font-size: 13px;
+        }
+        .service-card--pentest {
+          padding: 18px !important;
+          border-width: 1px !important;
+        }
+        .pentest-heading {
+          gap: 12px;
+        }
+        .pentest-mode {
+          font-size: 12px;
+        }
+        .test-modes article {
+          padding: 18px;
+        }
+        .test-modes h4 {
+          font-size: 19px;
+        }
+        .pentest-bottom h4 {
+          font-size: 15px;
+        }
+        .methodologies li {
+          padding: 11px;
+          font-size: 12px;
+        }
+        .deliverables {
+          padding: 17px;
+        }
+        .deliverables li {
+          font-size: 13px;
+        }
+        .industry-grid article > div {
+          padding: 15px;
+        }
+        .industry-grid p {
+          font-size: 12px;
+        }
+        .contact-layout {
+          margin-top: 28px;
+        }
+        form {
+          grid-template-columns: 1fr;
+        }
+        .contact .button {
+          width: 100%;
+        }
+      }
+      .button.button-solid {
+        background: #fff;
+        color: #09090a;
+        border-color: #fff;
+      }
+      .button.button-solid:hover {
+        background: #fff;
+        box-shadow: 0 0 30px #fff;
+      }
+      .honeypot {
+        position: absolute !important;
+        left: -10000px !important;
+        width: 1px !important;
+        height: 1px !important;
+        overflow: hidden !important;
+      }
+      /* Servicios de desarrollo */
+      .development-section {
+        background: #08080a;
+        border-block: 1px solid var(--line);
+      }
+      .development-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+      .development-card {
+        position: relative;
+        min-height: 310px;
+        padding: 28px;
+        border: 1px solid #ffffff2b;
+        border-radius: 7px;
+        background: linear-gradient(145deg, #151519, #09090b);
+        overflow: hidden;
+        transition: 0.25s;
+      }
+      .development-card::after {
+        content: "";
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        border: 1px solid #ffffff18;
+        border-radius: 50%;
+        right: -65px;
+        top: -65px;
+      }
+      .development-card:hover {
+        transform: translateY(-5px);
+        border-color: #fff;
+        box-shadow:
+          0 12px 32px #000,
+          0 0 22px #fff2;
+      }
+      .development-icon {
+        display: grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        border: 1px solid #fff;
+        border-radius: 8px;
+        color: #fff;
+        font-size: 22px;
+        box-shadow:
+          inset 0 0 14px #fff1,
+          0 0 14px #fff2;
+      }
+      .development-card h3 {
+        margin: 27px 0 10px;
+        font-size: 23px;
+        position: relative;
+        z-index: 1;
+      }
+      .development-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        position: relative;
+        z-index: 1;
+      }
+      .development-card ul {
+        margin: 22px 0 0;
+        padding: 0;
+        list-style: none;
+        position: relative;
+        z-index: 1;
+      }
+      .development-card li {
+        margin: 8px 0;
+        color: #dddde4;
+        font-size: 13px;
+      }
+      .development-card li::before {
+        content: "✓";
+        margin-right: 9px;
+        color: #fff;
+        text-shadow: 0 0 8px #fff;
+      }
+      .development-card small {
+        display: block;
+        margin-top: 18px;
+        color: #fff;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+      }
+      .development-card--featured {
+        background:
+          radial-gradient(circle at 88% 8%, #ffffff19, transparent 28%),
+          linear-gradient(145deg, #19191e, #09090b);
+      }
+      @media (max-width: 1024px) {
+        .development-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 700px) {
+        .development-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 460px) {
+        .development-card {
+          min-height: 0;
+          padding: 23px;
+        }
+        .development-card h3 {
+          margin-top: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#inicio" aria-label="AEGIS inicio"
+        >ΛΞG<span>ι</span>S</a
+      >
+      <button class="menu-button" aria-label="Abrir menú" aria-expanded="false">
+        ☰
+      </button>
+      <nav aria-label="Navegación principal">
+        <a href="#servicios">Servicios</a><a href="#paquetes">Paquetes</a
+        ><a href="#metodologia">Metodología</a><a href="#contacto">Contacto</a>
+      </nav>
+    </header>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.85">
-    <title>TecnoProjects Sec</title>
-    <meta name="keywords" content="Tec, Tech, TecnoProjects, projects, proyectos, portafolio, digital, technology, tecnologia, dev, developer, programmer, software, development, programador, programadores, programas, desarrollo, web, mobile, movil, desktop, escritorio, windows, linux, mac, ios, android, news, noticias">
-    <meta name="description" content="TecnoProjects Security Oficial">  
-    <meta name="author" content="TecnoProjects Security">
-    <meta name="robots" content="index, follow">
-    <meta name="google-site-verification" content="your-google-site-verification-code">
-    <link rel="icon" type="image/ico" href="img/ico.png">
-    <link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700|Open+Sans:400,600,700,800" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600,700,800,900" rel="stylesheet">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="responsive.css">
-</head>
+    <main id="inicio">
+      <section class="hero">
+        <div class="grid-bg"></div>
+        <div class="orb orb-one"></div>
+        <div class="orb orb-two"></div>
+        <div class="container hero-content">
+          <p class="eyebrow">SEGURIDAD · GOBERNANZA · RESILIENCIA</p>
+          <h1>Protegemos tu negocio en el mundo digital</h1>
+          <p class="lead">
+            Consultoría integral en ciberseguridad que combina servicios
+            técnicos avanzados y capacitación para desarrollar una estrategia de
+            seguridad robusta y sostenible.
+          </p>
+          <div class="actions">
+            <a class="button button-solid" href="#contacto"
+              >Solicitar consulta <b>→</b></a
+            ><a class="button" href="#servicios">Ver servicios <b>↓</b></a>
+          </div>
+          <div class="stats">
+            <div>
+              <strong data-count="2200">0</strong
+              ><span>Ciberataques diarios a nivel mundial</span>
+            </div>
+            <div>
+              <strong data-count="50">0</strong
+              ><span>Clientes satisfechos</span>
+            </div>
+            <div><strong>24/7</strong><span>Soporte disponible</span></div>
+          </div>
+        </div>
+      </section>
 
-<body>
-    <div class="wrapper">
-        <header class="header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="header-top">
-                            <div class="row">
-                                <div class="col-md-3 col-sm-12 col-xs-12">
-                                    <div class="logo">
-                                        <h2><a href="#">TecnoProjects Sec</a></h2>
-                                    </div>
-                                </div>
-                                <div class="col-md-9 col-sm-12 col-xs-12">
-                                    <div class="menu">
-                                        <ul class="nav navbar-nav">
-                                            <li class="active"><a href="#">INICIO</a></li>
-                                            <li><a class="nav-link" href="#sobre-nosotros">SOBRE NOSOTROS</a></li>
-                                            <li><a class="nav-link" href="#servicios">SERVICIOS</a></li>
-                                            <li><a class="nav-link" href="#portafolio">PORTFOLIO</a></li>
-                                            <li><a class="nav-link" href="Academy/index.html">ACADEMIA</a></li>
-                                            <li><a class="nav-link" href="#equipo">EQUIPO</a></li>
-                                            <li><a class="nav-link" href="Blog/index.html">BLOG</a></li>
-                                            <li><a class="nav-link" href="#contacto">CONTACTO</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="header-carousal owl-carousel owl-theme">
-                            <div class="item">
-                                <h4>SOMOS</h4>
-                                <h2>TECNOPROJECTS SECURITY</h2>
-                                <p>Agencia de Seguridad informatica especializada y desarrollo de todo tipo de sistemas de informacion.
-                                    <br>Paginas web, Apps Mobiles Android, IOS, Softwares y programas multiplataforma. </p>
-                                <button><a href="#sobre-nosotros" style="text-decoration:none; color:#000;">VER MAS</a></button>
-                            </div>
-                            <div class="item">
-                                <h4>SOMOS</h4>
-                                <h2>SOLUCIONES INTELIGENTES</h2>
-                                <p>¿Buscas eficiencia y efectividad? ¿necesitas automatizar procesos? ¿tu negocio necesita ayuda o proteccion informatica?
-                                    <br>TecnoProjects Security es tu solucion. </p>
-                                <button><a href="#sobre-nosotros" style="text-decoration:none; color:#000;">VER MAS</a></button>
-                            </div>
-                            <div class="item">
-                                <h4>SOMOS</h4>
-                                <h2>SEGURIDAD Y TECNOLOGIA</h2>
-                                <p>Auditorias de seguridad, reporte y parcheo de tus sistemas para evitar posibles intrusiones de atacantes futuras
-                                    <br>Seguridad informatica especializada. </p>
-                                <button><a href="#sobre-nosotros" style="text-decoration:none; color:#000;">VER MAS</a></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <section id="sobre-nosotros" class="about-us">
-            <h2>SOBRE NOSOTROS</h2>
-            <div class="about-icon">
-                <img src="img/section-icon.jpg" alt="">
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="video">
-                            <iframe width="100%" src="https://www.youtube.com/embed/PRxwdSAL2I8?si=vQnBpQZlHKGPAyDe" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="text">
-                            <h4>TecnoProjects Security es una empresa de Tecnologìa dedicada al desarrollo de software especializado, paginas web responsive personalizadas, apps multiplataforma, auditorias de seguridad entre otras cosas. </h4>
-                            <h3>Somos Desarrollo</h3>
-                            <p>Trabajamos constantemente en la innovacion y la optimizacion de tareas repetitivas para ayudarte a que tu negocio o proyecto sea mas optimo, eficiente y profesional. </p>
-                            <h3>Somos Seguridad</h3>
-                            <p>Te ayudamos con las auditorias de seguridad, para protegerte de los ciberdelincuentes, usamos las mejores metodologias Blue y Red team, hacemos un reporte de vulnerabilidades y te ayudamos a cubrirlas. </p>
-                            <a href="#servicios" class="a-button" style="text-decoration:none; color:#000;"><button>SABER MAS</button></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="service" id="servicios">
-            <h2>SERVICIOS</h2>
-            <div class="about-icon">
-                <img src="img/section-icon.jpg" alt="">
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4 col-sm-6">
-                        <div class="text">
-                            <i class="fa fa-google" aria-hidden="true"></i>
-                            <h4>DESARROLLO WEB</h4>
-                            <p>Diseño y desarrollo web Back-end y Front-end con diseño responsive completamente personalizado al gusto y preparado para su uso.</p>
-                            <h5><a href="#portafolio">VER MAS</a></h5>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="text">
-                            <i class="fa fa-lock" aria-hidden="true"></i>
-                            <h4>CIBERSEGURIDAD</h4>
-                            <p>Auditorias de seguridad a tus sistemas de informacion, uso de diferentes metodologias Red y blue team, reporte de vulnerabilidades, parcheo y mas.</p>
-                            <h5><a href="#portafolio">VER MAS</a></h5>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="text">
-                            <i class="fa fa-mobile" aria-hidden="true"></i>
-                            <h4>DESARROLLO MOVIL</h4>
-                            <p>Programacion de apps para smartphone multiplataforma, compatibles con Android y IOS, actualizables y escalables con diseño moderno.</p>
-                            <h5><a href="#contacto">VER MAS</a></h5>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="text">
-                            <i class="fa fa-laptop" aria-hidden="true"></i>
-                            <h4>DESARROLLO DESKTOP</h4>
-                            <p>Desarrollo de programas para windows, linux y mac, personalizados y adaptados a tus necesidades, automatizacion, gestion, control, etc.</p>
-                            <h5><a href="#contacto">LEER MAS</a></h5>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="text">
-                            <i class="fa fa-code" aria-hidden="true"></i>
-                            <h4>SOLUCION EN CODIGO</h4>
-                            <p>¿Tienes tareas repetitivas en tu area de trabajo digital que te gustaria automatizar? podemos crear scripts automaticos para ayudarte.</p>
-                            <h5><a href="https://github.com/TecnoProjects" target="_blank">VER MAS</a></h5>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="text">
-                            <i class="fa fa-linux" aria-hidden="true"></i>
-                            <h4>SYS-ADMIN</h4>
-                            <p>Gestion, mantenimiento y optimizacion de infraestructura, incluyendo hardware, software y redes, para asegurar el funcionamiento eficiente y seguro.</p>
-                            <h5><a href="#contacto">VER MAS</a></h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="portfolio" id="portafolio">
-            <h2>PORTFOLIO</h2>
-            <div class="about-icon">
-                <img src="img/section-icon.jpg" alt="">
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="button-group filters-button-group">
-                        <button data-filter="*" class="button is-checked">Todo</button>
-                        <button data-filter=".app-design" class="button">Desarrollo web</button>
-                        <button data-filter=".ul-design" class="button">Ciberseguridad</button>
-                        <button data-filter=".web-design" class="button">Scripts</button>
-                    </div>
+      <section id="nosotros" class="section container about">
+        <div>
+          <p class="eyebrow">ACERCA DE AEGIS</p>
+          <h2>Defensas reales para amenazas reales.</h2>
+          <p class="muted">
+            En un mundo donde las amenazas digitales evolucionan cada hora, las
+            empresas no necesitan sólo un reporte de vulnerabilidades; necesitan
+            un aliado estratégico que entienda el lenguaje de los atacantes para
+            construir defensas reales.
+          </p>
+          <h3>Nuestra experiencia abarca:</h3>
+          <ul class="checks">
+            <li>Evaluaciones técnicas de seguridad</li>
+            <li>Capacitación y concienciación</li>
+            <li>Consultoría estratégica</li>
+            <li>Implementación de controles de seguridad</li>
+          </ul>
+        </div>
+        <aside class="aegis-mark">
+          <span>◈</span><b>AEGIS</b><small>SECURITY CONSULTING</small>
+        </aside>
+      </section>
 
-                    <div class="grid" style="position: relative; height: 1221.93px;">
-                        <div class="portfolio-item app-design" style="position: absolute; left: 0px; top: 0px;">
-                            <img alt="SimulVR" src="img/portfolio1.jpg">
-                            <h3>SIMUL VR</h3>
-                            <p>Web</p>
-                            <div class="portfolio-text">
-                                <a href="img/portfolio1.jpg"><i class="fa fa-search" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                        <div class="portfolio-item ul-design" style="position: absolute; left: 386px; top: 0px;">
-                            <img alt="" src="img/portfolio2.jpg">
-                            <h3>Escritorio Linux</h3>
-                            <p>Ciberseguridad</p>
-                            <div class="portfolio-text">
-                                <a href="img/portfolio2.jpg"><i class="fa fa-search" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                        <div class="portfolio-item web-design" style="position: absolute; left: 772px; top: 0px;">
-                            <img alt="" src="img/portfolio3.jpg">
-                            <h3>Auto inicio de softwares</h3>
-                            <p>Scripts</p>
-                            <div class="portfolio-text">
-                                <a href="img/portfolio3.jpg"><i class="fa fa-search" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                        <div class="portfolio-item app-design" style="position: absolute; left: 0px; top: 372px;">
-                            <img alt="" src="img/portfolio4.jpg">
-                            <h3>CrossBorder DLB</h3>
-                            <p>Web</p>
-                            <div class="portfolio-text">
-                                <a href="img/portfolio4.jpg"><i class="fa fa-search" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                        <div class="portfolio-item ul-design" style="position: absolute; left: 386px; top: 372px;">
-                            <img alt="" src="img/portfolio5.jpg">
-                            <h3>Ataque SQL</h3>
-                            <p>Ciberseguridad</p>
-                            <div class="portfolio-text">
-                                <a href="img/portfolio5.jpg"><i class="fa fa-search" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                        <div class="portfolio-item web-design" style="position: absolute; left: 772px; top: 372px;">
-                            <img alt="" src="img/portfolio6.jpg">
-                            <h3>Auto ejecucion de comandos</h3>
-                            <p>Scripts</p>
-                            <div class="portfolio-text">
-                                <a href="img/portfolio6.jpg"><i class="fa fa-search" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                    </div>
+      <section class="trust">
+        <p>Empresas que han confiado en AEGIS</p>
+        <div class="logos">
+          <span>OptiApp</span><span>DEREK GLOBAL</span><span>MAZIO</span
+          ><span>BBOOK</span><span>CANGURO</span><span>GRUPO MOLLER</span>
+        </div>
+      </section>
 
-                </div>
-            </div>
-        </section>
-        <section class="testimonial">
-            <img src="img/textmonial-layer.jpg" alt="">
-            <h2>INSPIRACION</h2>
-            <div class="about-icon">
-                <img src="img/rrrrr.png" alt="">
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="testimonial-carousal-one owl-carousel owl-theme">
-                            <div class="item">
-                                <img src="img/testimonial-img.png" alt="">
-                                <h4>Ulises L Camacho</h4>
-                                <h5>Un ganador no es mas que.<br>
-un perdedor que jamas dejo de intentar <br>
-hasta que lo logrò. 
-</h5>
-                                <p><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></p>
-                            </div>
-                            <div class="item">
-                                <img src="img/testimonial-img.png" alt="">
-                                <h4>Ulises L Camacho</h4>
-                                <h5>Si el plan no funciona.<br>
-cambia el plan pero <br>
-nunca cambies la meta. 
-</h5>
-                                <p><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></p>
-                            </div>
-                            <div class="item">
-                                <img src="img/testimonial-img.png" alt="">
-                                <h4>Ulises L Camacho</h4>
-                                <h5>El éxito no se encuentra en el mapa, se crea en el camino.<br>
-Cada obstáculo es solo un ingrediente más para la receta <br>
-de tu próxima gran victoria. 
-</h5>
-                                <p><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="our-team" id="equipo">
-            <h2>NUESTRO EQUIPO</h2>
-            <div class="about-icon">
-                <img src="img/section-icon.jpg" alt="">
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3 col-sm-6 col-xs-6">
-                        <div class="hexagon1">
-                            <img src="img/shepe-team-area.png" alt="">
-                            <div class="hexagon one1">
-                                <img src="img/team-member1.jpg" alt="">
-                            </div>
-                            <h3>Ulises L Camacho</h3>
-                            <p>CEO | Developer | Hacker</p>
-                        </div>
-                    </div>
-                    <!--<div class="col-md-3 col-sm-6 col-xs-6">
-                        <div class="hexagon1">
-                            <img src="img/shepe-team-area.png" alt="">
-                            <div class="hexagon one2">
-                                <img src="img/team-member2.jpg" alt="">
-                            </div>
-                            <h3>Fernanda Castillo</h3>
-                            <p>Tester | Estilos</p>
-                        </div>
-                    </div> -->
-                    <div class="col-md-3 col-sm-6 col-xs-6">
-                        <div class="hexagon1">
-                            <img src="img/shepe-team-area.png" alt="">
-                            <div class="hexagon one3">
-                                <img src="img/team-member3.jpg" alt="">
-                            </div>
-                            <h3>Brayan Torres Padilla</h3>
-                            <p>Front-End Developer</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 col-xs-6">
-                        <div class="hexagon1">
-                            <img src="img/shepe-team-area.png" alt="">
-                            <div class="hexagon one4">
-                                <img src="img/team-member4.jpg" alt="">
-                            </div>
-                            <h3>Fernando Palacios</h3>
-                            <p>Back-End Developer</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="two1 tom">
-                            <div class="images">
-                                <img src="img/team-member1.jpg" alt="">
-                            </div>
-                            <div class="description">
-                                <h3>Ulises L Camacho--<span>CEO | Hacker</span> </h3>
-                                <h4>07 Años de Experiencia</h4>
-                                <h5>Ing. en sistemas computacionales, Programador fullstack multi tecnologia, especializado en seguridad informatica ofensiva con metodologias red-team OSCP eJPT C|EH, redes CCNA3, sistemas operativos, diseño, administracion de proyectos en tecnologia de multiples aplicaciones.</h5>
-                                <p><a href="https://www.linkedin.com/in/uliseslcamacho/" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a><a href="https://ulisescamacho.vercel.app" target="_blank"><i class="fa fa-briefcase" aria-hidden="true"></i></a><a href="https://instagram.com/ulises__camacho" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></p>
-                            </div>
-                        </div>
-                        <div class="two2 tom">
-                            <div class="images">
-                                <img src="img/team-member2.jpg" alt="">
-                            </div>
-                            <!-- <div class="description">
-                                <h3>Fernanda Castillo--<span>Tester | Modelo | Diseño</span> </h3>
-                                <h4>05 Años de experiencia</h4>
-                                <h5>Soy una mujer de 21 años, modelo profesional, Diseñadora, Tester, bailarina, peleadora de artes marciales mixtas y bartender. Mi trayectoria une el arte, la disciplina y la presencia escénica, proyectando belleza, fortaleza y carácter en cada faceta de mi trabajo.</h5>
-                                <p><a href="https://www.facebook.com/share/16zaiW6X1V/?mibextid=wwXIfr" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a><a href="https://www.instagram.com/babybelial" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></p>
-                            </div>
-                        </div>
-                        <div class="two3 tom">
-                            <div class="images">
-                                <img src="img/team-member3.jpg" alt="">
-                            </div> -->
-                            <div class="description">
-                                <h3>Brayan Torres Padilla--<span>Front-End Developer</span> </h3>
-                                <h4>03 Años de experiencia</h4>
-                                <h5>Ing. Industrial & JR Developer, especializado en desarrollo web Front-end con tecnologias como HTML5, CSS3, JavaScript y diferentes frameworks para una mejor experiencia del usuario en nuestros diferentes sitios web, asi como especialista en materiales plasticos de inyeccion por moldeo para la creacion de multiples piezas plasticas de alta calidad.</h5>
-                                <p><a href="https://drive.google.com/drive/folders/1ntyaaMuFxLWTM9ymEMrXAzxxtLO_dwTK?usp=sharing" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a><a href="https://instagran.com/padillabrayantorres" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a><a href="https://x.com/@BrayanTorrespa2" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></p>
-                            </div>
-                        </div>
-                        <div class="two4 tom">
-                            <div class="images">
-                                <img src="img/team-member4.jpg" alt="">
-                            </div>
-                            <div class="description">
-                                <h3>Fernando Palacios--<span>Back-End Developer</span> </h3>
-                                <h4>02 Años de experiencia</h4>
-                                <h5>Ing. Industrial & JR Developer, especializado en desarrollo web Back-End de multiples tecnologias para el desarrollo del lado del servidor de nuestros sitios web asi como desarrollador de circuitos electronicos y creador de prototipos electromecanicos de multiples funcionalidades para la ayuda del ser humano.</h5>
-                                <p><a href="https://www.facebook.com/fernando.palacios.901530?mibextid=ZbWKwL" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a><a href="https://www.instagram.com/frndplcs1911?igsh=MWh1ZndndHl4MjQ2Zw==" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="our-blog">
-            <h2>NUESTRO BLOG</h2>
-            <div class="about-icon">
-                <img src="img/section-icon.jpg" alt="">
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="blog-carousal owl-carousel owl-theme">
-                            <div class="item">
-                                <div class="images">
-                                    <img src="img/blog-area-image.jpg" alt="">
-                                </div>
-                                <div class="text">
-                                    <h4> CVE-2020-1472 (ZeroLogon)</h4>
-                                    <h5>El protocolo MS-NRPC (Netlogon Remote Protocol) de Microsoft Windows tiene una vulnerabilidad llamada CVE-2020-1472. Robar un hash de contraseñas de usuario y usarlo como autenticación permite a los atacantes hacer ataques de "pass-the-hash", que les permite acceso no autorizado a una red</h5>
-                                    <p>By <span class="name">Ulises L Camacho</span> | <span class="date">Agosto 9, 2025</span></p>
-                                    <h6><a href="Blog/index.html">BLOG</a></h6>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="images">
-                                    <img src="img/blog-area-image.jpg" alt="">
-                                </div>
-                                <div class="text">
-                                    <h4>CVE-2021-44228 (Log4Shell)</h4>
-                                    <h5>La biblioteca Apache Log4j 2 para iniciar mensajes de error en aplicaciones Java contiene una vulnerabilidad. Si se explota con éxito, podría dar a un hacker remoto el control completo de un dispositivo a través de Internet.</h5>
-                                    <p>By <span class="name">Ulises L Camacho</span> | <span class="date">Agosto 25, 2025</span></p>
-                                    <h6><a href="Blog/index.html">BLOG</a></h6>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="images">
-                                    <img src="img/blog-area-image.jpg" alt="">
-                                </div>
-                                <div class="text">
-                                    <h4>CVE-2021-26855 (ProxyLogon)</h4>
-                                    <h5>Descubierta en Microsoft Exchange. Esta vulnerabilidad permite a un atacante ejecutar código remotamente en un servidor débil, potencialmente obteniendo acceso al sistema sin autorización.</h5>
-                                    <p>By <span class="name">Ulises L Camacho</span> | <span class="date">Septiembre 10, 2025</span></p>
-                                    <h6><a href="Blog/index.html">BLOG</a></h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="footer-icon">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="footer-carousal owl-carousel owl-theme">
-                            <div class="item">
-                                <img src="img/htb.png" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="img/isc.png" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="img/cb.png" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="img/nw.png" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="contact-area">
-            <h2>CONTACTANOS</h2>
-            <div class="about-icon">
-                <img src="img/section-icon.jpg" alt="">
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4 col-sm-4">
-                        <div class="contact-part">
-                            <h4><i class="fa fa-map-marker" aria-hidden="true"></i>Ubicacion</h4>
-                            <P>StartUp Mexicana de operacion remota.</P>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4">
-                        <div class="contact-part">
-                            <h4><i class="fa fa-phone" aria-hidden="true"></i>Llamanos</h4>
-                            <p>+524171028032</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4">
-                        <div class="contact-part">
-                            <h4><i class="fa fa-envelope" aria-hidden="true"></i>Envia un correo</h4>
-                            <p>TecnoProjects.Sec@proton.me</p>
-                            <p></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="contact-form">
-                            <form action="#" method="post">
-                                <input type="text" placeholder="Name">
-                                <input type="email" placeholder="Email">
-                                <input type="text" placeholder="Subject">
-                                <textarea placeholder="Message"></textarea>
-                                <input type="submit" value="ENVIAR">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <footer class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4 col-sm-5 col-xs-6">
-                        <div class="text">
-                            <p><span><a href="#">TecnoProjects Sec</a></span> &copy; 2026 All Rights Reserved.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-3 col-xs-4">
-                        <div class="footer-logo">
-                            <p><a href="#">TecnoProjects Sec</a></p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-xs-2">
-                        <div class="icon">
-                            <p><a href="https://github.com/TecnoProjects" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a><a href="https://www.linkedin.com/company/tecnoprojects-security/" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a><a href="https://instagram.com/tecnoprojects.sec" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a><a href="https://facebook.com/TPSecurity" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </div>
-    <script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/isotope.pkgd.js"></script>
-    <script src="js/masonry.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/active.js"></script>
-</body>
+      <section id="servicios" class="section services-section">
+        <div class="container">
+          <p class="eyebrow">SERVICIOS</p>
+          <h2>Servicios técnicos de seguridad</h2>
+          <p class="section-intro">
+            Soluciones especializadas para identificar y mitigar
+            vulnerabilidades en tu infraestructura digital.
+          </p>
+          <div id="technical-services" class="service-grid"></div>
+        </div>
+      </section>
+      <section class="section governance">
+        <div class="container">
+          <p class="eyebrow">CONSULTORÍA</p>
+          <h2>Servicios de consultoría y GRC</h2>
+          <p class="section-intro">
+            Gobernanza, riesgo y cumplimiento para fortalecer tu postura de
+            seguridad.
+          </p>
+          <div id="grc-services" class="service-grid"></div>
+        </div>
+      </section>
 
+      <section class="section development-section">
+        <div class="container">
+          <p class="eyebrow">DESARROLLO</p>
+          <h2>Software construido para crecer</h2>
+          <p class="section-intro">
+            Diseñamos productos digitales rápidos, mantenibles y seguros, desde
+            la primera idea hasta su puesta en producción.
+          </p>
+          <div class="development-grid">
+            <article class="development-card">
+              <span class="development-icon">⌘</span>
+              <h3>Desarrollo Web</h3>
+              <p>
+                Plataformas y sitios web modernos enfocados en rendimiento,
+                conversión y una experiencia clara en cualquier navegador.
+              </p>
+              <ul>
+                <li>Aplicaciones web a medida</li>
+                <li>Portales, e-commerce y dashboards</li>
+                <li>APIs e integraciones seguras</li>
+              </ul>
+              <small>WEB · CLOUD · API</small>
+            </article>
+            <article class="development-card development-card--featured">
+              <span class="development-icon">▣</span>
+              <h3>Aplicaciones Desktop</h3>
+              <p>
+                Herramientas de escritorio para optimizar procesos internos,
+                centralizar operaciones y trabajar aun sin conexión.
+              </p>
+              <ul>
+                <li>Sistemas administrativos a medida</li>
+                <li>Integración con hardware y bases de datos</li>
+                <li>Actualizaciones y soporte continuo</li>
+              </ul>
+              <small>WINDOWS · MACOS · LINUX</small>
+            </article>
+            <article class="development-card">
+              <span class="development-icon">▯</span>
+              <h3>Aplicaciones Móviles</h3>
+              <p>
+                Experiencias móviles nativas y multiplataforma que acercan tu
+                producto a clientes y equipos de trabajo.
+              </p>
+              <ul>
+                <li>Apps para iOS y Android</li>
+                <li>Diseño UX/UI orientado a usuarios</li>
+                <li>Notificaciones y servicios en tiempo real</li>
+              </ul>
+              <small>IOS · ANDROID · CROSS-PLATFORM</small>
+            </article>
+          </div>
+        </div>
+      </section>
 
+      <section class="section industries container">
+        <p class="eyebrow">INDUSTRIAS</p>
+        <h2>Sectores que protegemos</h2>
+        <p class="section-intro">
+          Experiencia comprobada en sectores críticos con requerimientos
+          específicos de seguridad y cumplimiento.
+        </p>
+        <div class="industry-grid">
+          <article>
+            <header><i>01</i><span>⌁</span></header>
+            <div>
+              <h3>Automotriz</h3>
+              <p>
+                Cumplimiento TISAX/VDA ISA para proveedores de la industria
+                automotriz.
+              </p>
+              <em>TISAX · VDA ISA</em>
+            </div>
+          </article>
+          <article>
+            <header><i>02</i><span>◈</span></header>
+            <div>
+              <h3>Financiero</h3>
+              <p>
+                Seguridad para banca, fintech y sistemas de pagos electrónicos.
+              </p>
+              <em>SOX · SPEI · SPID</em>
+            </div>
+          </article>
+          <article>
+            <header><i>03</i><span>⌘</span></header>
+            <div>
+              <h3>Tecnología & SaaS</h3>
+              <p>
+                Startups, desarrollo de software y plataformas cloud-native.
+              </p>
+              <em>API Security · Cloud</em>
+            </div>
+          </article>
+          <article>
+            <header><i>04</i><span>△</span></header>
+            <div>
+              <h3>Manufactura & OT</h3>
+              <p>
+                Seguridad en tecnología operacional e infraestructura
+                industrial.
+              </p>
+              <em>ICS/SCADA · OT Security</em>
+            </div>
+          </article>
+        </div>
+        <p class="industry-note">
+          ¿Tu industria no aparece listada? Contamos con experiencia en sectores
+          adicionales. <a href="#contacto">Consulta tu caso específico →</a>
+        </p>
+      </section>
+
+      <section id="paquetes" class="section package-section">
+        <div class="container">
+          <p class="eyebrow">PAQUETES</p>
+          <h2>Paquetes combinados</h2>
+          <p class="section-intro">
+            Soluciones integrales con precios especiales.
+          </p>
+          <div class="packages">
+            <article>
+              <h3>Paquete Integral Web</h3>
+              <p>Pentesting + SAST + Revisión de Configuración</p>
+              <ul>
+                <li>Evaluación integral de seguridad</li>
+                <li>Informes técnicos y ejecutivos</li>
+                <li>Plan de remediación priorizado</li>
+                <li>Seguimiento post-entrega</li>
+              </ul>
+              <a href="#contacto">Solicitar cotización</a>
+            </article>
+            <article>
+              <h3>Paquete de Reconocimiento Avanzado</h3>
+              <p>Pentesting + OSINT + DAST</p>
+              <ul>
+                <li>Evaluación integral de seguridad</li>
+                <li>Informes técnicos y ejecutivos</li>
+                <li>Plan de remediación priorizado</li>
+                <li>Seguimiento post-entrega</li>
+              </ul>
+              <a href="#contacto">Solicitar cotización</a>
+            </article>
+            <article class="featured">
+              <small>Más completo</small>
+              <h3>Full Stack Security Assessment</h3>
+              <p>Todos los servicios técnicos</p>
+              <ul>
+                <li>Evaluación integral de seguridad</li>
+                <li>Informes técnicos y ejecutivos</li>
+                <li>Plan de remediación priorizado</li>
+                <li>Seguimiento post-entrega</li>
+              </ul>
+              <a href="#contacto">Solicitar cotización</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="metodologia" class="section container">
+        <p class="eyebrow">PROCESO</p>
+        <h2>Metodología de trabajo</h2>
+        <p class="section-intro">
+          Un enfoque estructurado y probado para garantizar resultados de alta
+          calidad.
+        </p>
+        <div class="steps">
+          <article>
+            <b>01</b>
+            <h3>Fase 1: Análisis y Planificación</h3>
+            <ul>
+              <li>Reunión inicial de alcance</li>
+              <li>Definición de objetivos</li>
+              <li>Cronograma de trabajo</li>
+            </ul>
+          </article>
+          <article>
+            <b>02</b>
+            <h3>Fase 2: Ejecución</h3>
+            <ul>
+              <li>Implementación de evaluaciones técnicas</li>
+              <li>Recopilación y análisis de datos</li>
+              <li>Documentación de hallazgos</li>
+            </ul>
+          </article>
+          <article>
+            <b>03</b>
+            <h3>Fase 3: Entrega y Seguimiento</h3>
+            <ul>
+              <li>Informes técnicos y ejecutivos</li>
+              <li>Sesión de presentación de resultados</li>
+              <li>Plan de remediación priorizado</li>
+              <li>Seguimiento post-entrega (30 días)</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="casos" class="section case-section">
+        <div class="container">
+          <p class="eyebrow">CASOS DE ÉXITO</p>
+          <h2>Resultados comprobados</h2>
+          <p class="section-intro">
+            Soluciones empresariales que protegen activos críticos y aseguran la
+            continuidad operacional.
+          </p>
+          <div id="cases" class="case-grid"></div>
+        </div>
+      </section>
+
+      <section id="contacto" class="section contact">
+        <div class="container">
+          <p class="eyebrow">CONTACTO</p>
+          <h2>Solicita una consulta gratuita</h2>
+          <div class="contact-layout">
+            <form id="contact-form" method="post" autocomplete="on">
+              <div class="honeypot" aria-hidden="true">
+                <label
+                  >Website<input
+                    name="website"
+                    tabindex="-1"
+                    autocomplete="off"
+                /></label>
+              </div>
+              <label
+                >Nombre completo<input
+                  required
+                  name="name"
+                  autocomplete="name"
+                  minlength="2"
+                  maxlength="100" /></label
+              ><label
+                >Correo electrónico<input
+                  required
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  inputmode="email"
+                  maxlength="254" /></label
+              ><label
+                >Empresa<input
+                  name="company"
+                  autocomplete="organization"
+                  maxlength="120" /></label
+              ><label
+                >Servicio de interés<select required name="service">
+                  <option value="">Selecciona un servicio</option>
+                  <option>Pentesting Web</option>
+                  <option>Consultoría y GRC</option>
+                  <option>Cloud Security</option>
+                </select></label
+              ><label
+                >Mensaje<textarea
+                  name="message"
+                  rows="5"
+                  minlength="10"
+                  maxlength="2000"
+                ></textarea></label
+              ><button class="button button-solid" type="submit">
+                Enviar solicitud →
+              </button>
+              <p class="form-message" aria-live="polite"></p>
+            </form>
+            <aside>
+              <h3>Información de contacto</h3>
+              <p>Para consultas y solicitudes, utiliza el formulario.</p>
+              <a
+                href="https://www.linkedin.com/company/aegis-security-consultant"
+                target="_blank"
+                rel="noopener noreferrer"
+                >LinkedIn · Aegis Security Consultant ↗</a
+              >
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      © 2025 AEGIS Security Consulting. Todos los derechos reservados.
+    </footer>
+    <script src="script.js"></script>
+  </body>
 </html>
