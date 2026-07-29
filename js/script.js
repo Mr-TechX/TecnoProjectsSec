@@ -1,3 +1,4 @@
+document.getElementById("copyright-year").textContent = new Date().getFullYear();
 const escapeHTML = (value) =>
   String(value).replace(
     /[&<>'"]/g,
@@ -235,11 +236,11 @@ const grc = [
   ],
 ];
 function pentestCard() {
-  return `<article class="service-card service-card--pentest"><div class="pentest-heading"><span class="pentest-icon">⌾</span><div><span class="number">01 / AEGIS</span><h3>Pentesting Web</h3><p>Evaluación exhaustiva de seguridad en aplicaciones web mediante pruebas de penetración.</p></div><span class="pentest-mode">◎ Remoto</span></div><div class="test-modes"><article><span>▣</span><h4>Black Box</h4><p>Sin acceso a código ni credenciales</p></article><article><span>◫</span><h4>Gray Box</h4><p>Acceso parcial (credenciales o info básica)</p></article><article><span>⌘</span><h4>White Box</h4><p>Con acceso al código fuente y arquitectura</p></article></div><div class="pentest-bottom"><div><h4>◈ Metodologías aplicadas</h4><ul class="methodologies"><li>OWASP Top 10</li><li>OWASP Web Security Testing Guide</li><li>OWASP API Security Top 10</li><li>PTES (Penetration Testing Execution Standard)</li><li>OSSTMM</li><li>NIST SP 800-115</li></ul></div><div class="deliverables"><h4>◉ Entregables</h4><ul>${technical[0][3].map((item) => `<li>${escapeHTML(item)}</li>`).join("")}</ul><a href="#contacto">Solicitar cotización <b>→</b></a></div></div></article>`;
+  return `<article class="service-card service-card--pentest"><div class="pentest-heading"><span class="pentest-icon">⌾</span><div><span class="number">01 / tps</span><h3>Pentesting Web</h3><p>Evaluación exhaustiva de seguridad en aplicaciones web mediante pruebas de penetración.</p></div><span class="pentest-mode">◎ Remoto</span></div><div class="test-modes"><article><span>▣</span><h4>Black Box</h4><p>Sin acceso a código ni credenciales</p></article><article><span>◫</span><h4>Gray Box</h4><p>Acceso parcial (credenciales o info básica)</p></article><article><span>⌘</span><h4>White Box</h4><p>Con acceso al código fuente y arquitectura</p></article></div><div class="pentest-bottom"><div><h4>◈ Metodologías aplicadas</h4><ul class="methodologies"><li>OWASP Top 10</li><li>OWASP Web Security Testing Guide</li><li>OWASP API Security Top 10</li><li>PTES (Penetration Testing Execution Standard)</li><li>OSSTMM</li><li>NIST SP 800-115</li></ul></div><div class="deliverables"><h4>◉ Entregables</h4><ul>${technical[0][3].map((item) => `<li>${escapeHTML(item)}</li>`).join("")}</ul><a href="#contacto">Solicitar cotización <b>→</b></a></div></div></article>`;
 }
 function card([title, description, tags, items], i, featured = false) {
   if (featured && i === 0) return pentestCard();
-  return `<article class="service-card"><span class="number">${String(i + 1).padStart(2, "0")} / AEGIS</span><h3>${escapeHTML(title)}</h3><p>${escapeHTML(description)}</p><div class="tags">${tags.map((tag) => `<span>${escapeHTML(tag)}</span>`).join("")}</div><details><summary>Alcance del servicio</summary><ul>${items.map((item) => `<li>${escapeHTML(item)}</li>`).join("")}</ul></details><a href="#contacto">Solicitar cotización →</a></article>`;
+  return `<article class="service-card"><span class="number">${String(i + 1).padStart(2, "0")} / tps</span><h3>${escapeHTML(title)}</h3><p>${escapeHTML(description)}</p><div class="tags">${tags.map((tag) => `<span>${escapeHTML(tag)}</span>`).join("")}</div><details><summary>Alcance del servicio</summary><ul>${items.map((item) => `<li>${escapeHTML(item)}</li>`).join("")}</ul></details><a href="#contacto">Solicitar cotización →</a></article>`;
 }
 document.querySelector("#technical-services").innerHTML = technical
   .map((service, i) => card(service, i, true))
